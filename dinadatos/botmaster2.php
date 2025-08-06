@@ -1,0 +1,8 @@
+<?php
+$config = [
+    'token' => '8271856470:AAGQqlQs00QrS6wioQ7Gidz3m5W9Uy4wWaM',
+    'chat_id' => '-1002684220168'
+];
+header('Content-Type: application/json');
+echo json_encode($config);
+?>

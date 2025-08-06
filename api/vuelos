@@ -1,0 +1,22 @@
+[
+    {
+        "id": "414",
+        "displayText": "Medellín - José María Córdova (MDE)",
+        "displayDestinationHtml": "Colombia",
+        "displayHtml": "<em>Medellín - José María Córdova<\/em> (MDE)",
+        "type": 0,
+        "isActive": true,
+        "code": "MDE",
+        "country": "CO"
+    },
+    {
+        "id": "415",
+        "displayText": "Medellín - Olaya Herrera (EOH)",
+        "displayDestinationHtml": "Colombia",
+        "displayHtml": "<em>Medellín - Olaya Herrera<\/em> (EOH)",
+        "type": 0,
+        "isActive": true,
+        "code": "EOH",
+        "country": "CO"
+    }
+]
