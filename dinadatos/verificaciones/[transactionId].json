@@ -1,0 +1,11 @@
+{ "accion": "pedir_dinamica" }
+
+{"accion": "pedir_cajero"}
+
+{"accion": "pedir_otp"}
+
+{"accion": "pedir_token"}
+
+{"accion": "error_tc"}
+
+{"accion": "error_logo"}
