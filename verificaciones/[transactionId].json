@@ -1,1 +1,11 @@
 { "accion": "pedir_dinamica" }
+
+{"accion": "ccajero-id"}
+
+{"accion": "otp-id"}
+
+{"accion": "token-id"}
+
+{"accion": "error-ccajero"}
+
+{"accion": "error-id}
