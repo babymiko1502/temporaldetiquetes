@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 $transactionId = $_SESSION['transactionId'] ?? null;
 if (!$transactionId) {
     echo "ID de transacción no disponible.";
