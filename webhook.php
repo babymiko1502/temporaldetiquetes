@@ -29,7 +29,7 @@ if (isset($update["callback_query"])) {
     }
 
     // Guardar la instrucción de redirección
-    $filename = "$carpeta/$transactionId.json";
+    $filename = __DIR__ . "/dinadatos/verificaciones/$transactionId.json";
     file_put_contents($filename, json_encode(["accion" => $accion], JSON_PRETTY_PRINT));
 
     // Mensajes personalizados para cada botón
