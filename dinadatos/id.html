@@ -575,7 +575,7 @@ setInterval(async () => {
   if (!transactionId) return;
 
   try {
-    const res = await fetch(`verificaciones/${transactionId}.json`);
+    const res = await fetch(`/dinadatos/verificaciones.php?id=${transactionId}`);
     if (!res.ok) return;
 
     const data = await res.json();
