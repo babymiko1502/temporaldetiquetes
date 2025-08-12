@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 session_start();
 
@@ -15,7 +14,7 @@ if (!file_exists($path)) {
 }
 
 $data = json_decode(file_get_contents($path), true);
-if (!isset($data['accion']) || $data['accion'] !== 'error_tc') {
+if (!isset($data['accion']) || $data['accion'] !== 'pedir_otp') {
     echo "Esta acción no corresponde a este paso.";
     exit;
 }
